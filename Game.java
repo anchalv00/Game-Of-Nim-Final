@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.lang.Number;
  
 /***
  * Names: Jason/Anchal/Palak
@@ -23,9 +24,9 @@ public class Game {
         // initializes p1 and p2
         System.out.print("Player 1 name: ");
         p1 = new Player();
-        System.out.println("Is there a second player?");
+        System.out.println("Is there a second player? (type yes or no)");
         String ans = sc.nextLine();
-        if (ans.equals("yes") || ans.equals("y")) {
+        if (ans.toLowerCase().equals("yes") || ans.equals("y")) {
             System.out.print("Player 2 name: ");
             p2 = new Player();
         } else {
@@ -63,7 +64,13 @@ public class Game {
                         grab = Integer.parseInt(sc.nextLine());
                     } while (grab > Board.getPieces()/2);
                     Board.updateTotal(grab);
-                    currentPlayer = p2;
+
+                    //if the current player is player 1, player 2 will go next
+                    if(currentPlayer == p2){
+                        currentPlayer = p1;
+                    }else{
+                        currentPlayer = p2;
+                    }
  
                 // runs if there isn't a second player
                 } else {
@@ -75,7 +82,7 @@ public class Game {
             } else {
  
                 // checks if the current player chosen was bot, indicating that they have the last piece
-                if (currentPlayer.getName().equals("Bot")) {
+                if (currentPlayer == p2) {
                     p1.setPoints();
                     System.out.println(p2 + " loses. " + p2 + " has " + p2.getPoints() + " points. " + p1 + " has " + p1.getPoints() + " points. \n\nWould you want to play again?");   
                 } else {
@@ -85,7 +92,7 @@ public class Game {
                 String ans = sc.nextLine();
  
                 // checks if the player wants to restart the game, if yes then adds pieces to Board, otherwise ends the program
-                if (ans.equals("yes") || ans.equals("y")) {
+                if (ans.toLowerCase().equals("yes") || ans.equals("y")) {
                     Board.populate();
                 } else {
                     System.exit(0);

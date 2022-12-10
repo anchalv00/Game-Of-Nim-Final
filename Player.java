@@ -22,7 +22,7 @@ public class Player {
  
     // randomizes a number for the bot to grab
     public int randomizeNumber() {
-        return (int) (Math.random() * Board.getPieces()/2 + 0.5);
+        return (int) (Math.random() * Board.getPieces()/2) + 1;
     }
  
     // adds one point
