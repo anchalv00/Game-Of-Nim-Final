@@ -17,8 +17,20 @@ public class Game {
     private int option;
     private Player currentPlayer;
     private int pieces;
+    private String input;
     private int grab;
  
+    public static boolean isInteger(String s){
+        try{
+            Integer.parseInt(s);
+        } catch(Exception e){
+            return false;
+        }
+        return true;
+    }
+
+ 
+
     // Constructors
     public Game() {
         // initializes p1 and p2
@@ -51,7 +63,7 @@ public class Game {
  
         // runs the game through a while loop
         while (true) {
-            // prints intial question
+            // prints the number of pieces on the board
             System.out.println("\nPieces: " + Board.getPieces());
  
             // runs if total pieces isn't 1
@@ -59,11 +71,18 @@ public class Game {
                 
                 // runs if there is a second player
                 if (!currentPlayer.getName().equals("Bot")) {
-                    do {
+                    
+                    do{
+
                         System.out.println(currentPlayer + ", how many pieces would you like to grab?");
-                        grab = Integer.parseInt(sc.nextLine());
-                    } while (grab > Board.getPieces()/2);
+                        input = sc.nextLine();
+
+                    } while(!isInteger(input) || Integer.parseInt(input) > Board.getPieces()/2);
+
+
+                    grab = Integer.parseInt(input);
                     Board.updateTotal(grab);
+
 
                     //if the current player is player 1, player 2 will go next
                     if(currentPlayer == p2){
