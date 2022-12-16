@@ -29,6 +29,19 @@ public class Game {
         return true;
     }
 
+    public void ask() {
+        System.out.print("\n\nWould you want to play again? ");
+        String ans = sc.nextLine().toLowerCase();
+        // checks if the player wants to restart the game, if yes then adds pieces to Board, otherwise ends the program
+        if (ans.equals("yes") || ans.equals("y")) {
+            Board.populate();
+        } else if (ans.equals("no") || ans.equals("n")) {
+            System.exit(1);
+        } else {
+            ask();
+        } 
+    }
+
  
 
     // Constructors
@@ -74,7 +87,7 @@ public class Game {
                     
                     do{
 
-                        System.out.println(currentPlayer + ", how many pieces would you like to grab?");
+                        System.out.println(currentPlayer + ", how many pieces would you like to grab? (Max: " + (int) Board.getPieces()/2 + ")");
                         input = sc.nextLine();
 
                     } while(!isInteger(input) || Integer.parseInt(input) > Board.getPieces()/2);
@@ -103,19 +116,14 @@ public class Game {
                 // checks if the current player chosen was bot, indicating that they have the last piece
                 if (currentPlayer == p2) {
                     p1.setPoints();
-                    System.out.println(p2 + " loses. " + p2 + " has " + p2.getPoints() + " points. " + p1 + " has " + p1.getPoints() + " points. \n\nWould you want to play again?");   
+                    System.out.println(p2 + " loses. " + p2 + " has " + p2.getPoints() + " points. " + p1 + " has " + p1.getPoints() + " points. ");   
                 } else {
                     p2.setPoints();
-                    System.out.println(p1 + " loses. " + p1 + " has " + p1.getPoints() + " points. " + p2 + " has " + p2.getPoints() + " points. \n\nWould you want to play again?");
+                    System.out.println(p1 + " loses. " + p1 + " has " + p1.getPoints() + " points. " + p2 + " has " + p2.getPoints() + " points.");
                 }
-                String ans = sc.nextLine();
  
-                // checks if the player wants to restart the game, if yes then adds pieces to Board, otherwise ends the program
-                if (ans.toLowerCase().equals("yes") || ans.equals("y")) {
-                    Board.populate();
-                } else {
-                    System.exit(0);
-                } 
+                ask();
+                
             }
         }
     }
